@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeLeaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+
+        .table{
+            background-color: #f7fffe;
+            padding: 5%;
+            -webkit-box-shadow: 0px 0px 10px 2px rgb(0 0 0 / 10%);
+            box-shadow: 0px 0px 10px 2px rgb(0 0 0 / 10%);
+            -webkit-transition: .25s ease-out;
+            margin-bottom: 3%;
+        }
+        .main{
+            -webkit-box-shadow: 0px 0px 10px 2px rgb(0 0 0 / 10%);
+            box-shadow: 0px 0px 10px 2px rgb(0 0 0 / 10%);
+            -webkit-transition: .25s ease-out;
+            border:1px solid black;
+            padding: 0px 15px;
+        }
+
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-info">
+    <a class="navbar-brand ml-5" th:href="@{/projects}">Project Management System</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item btn btn-light mr-1">
+                <img  th:src="${encodedImage}" class="rounded-circle"  height="20" width="20" />
+                <a class="text-dark" th:href="@{/projects/profile/{id}(id=${user.id})}" th:text="${user.username}" ></a>
+            </li>
+            <li class="nav-item">
+                <form th:action="@{/logout}" method="post">
+                    <button class="btn btn-logout btn-light" type="submit">Logout</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="col-lg-6 col-md-6 col-sm-6 mt-5 container justify-content-center card">
+    <h1 class="text-center pt-1">owner</h1>
+    <div class="card-body">
+
+
+                <div class="main" th:each="entry : ${ownersWithProjects}">
+                    <div class="row">
+                    <div class="col-lg-5" style="border-right: 1px solid black;">
+                    <p th:text="${entry.key.username}"></p>
+            </div>
+            <div class="col-lg-6" th:with="projectCount=${#lists.size(entry.value)}">
+                <div class="row">
+                    <div class="col-lg-10">
+                <span th:each="project, iterStat : ${entry.value}">
+                    <p th:text="${project.name}"></p>
+
+                </span>
+                    </div>
+                    <div class="col-lg-2">
+                 <span th:text="${projectCount}"></span>
+                    </div>
+                </div>
+
+            </div>
+
+
+    </div>
+</div>
+</div>
+</div>
+
+
+
+</body>
+</html>
